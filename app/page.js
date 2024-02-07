@@ -14,8 +14,6 @@ async function getData() {
 
 const Home = async () => {
   const {products, banner } = await getData()
-  // console.log("Data: ", data.products[0].image[0].asset._ref)
-  // console.log("Products: ", banner)
   return (
     <div>
       <HeroBanner heroBanner={banner.length && banner[0]}/>
