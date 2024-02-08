@@ -1,30 +1,24 @@
-import { Footer, HeroBanner, FooterBanner, Product } from '../components'
+import { Footer, HeroBanner, FooterBanner, Product, Navbar, Products } from '../components'
 import React from 'react'
 import './globals.css';
 import { client } from '../lib/client'
 
 
 async function getData() {
-  const productQuery = '*[_type == "product"]'
-  const products = await client.fetch(productQuery, { next: { revalidate: 20 } })
   const bannerQuery = '*[_type == "banner"]'
   const banner = await client.fetch(bannerQuery, { next: { revalidate: 20 } })
-  return {products, banner}
+  return {banner}
 }
 
 const Home = async () => {
-  const {products, banner } = await getData()
+  const { banner } = await getData()
   return (
-    <div>
+    <div className="main-container">
+      <Navbar />
       <HeroBanner heroBanner={banner.length && banner[0]}/>
-      <div className="products-heading">
-        <h2>Best Selling Products</h2>
-        <p>Speakers of many variations</p>
-      </div>
-      <div className="products-container">
-        {products?.map((product) => <Product key={product._id} product={product}/>)}
-      </div>
+      <Products />
       <FooterBanner footerBanner={banner.length && banner[1]} />
+      <Footer />
     </div>
   )
 }
