@@ -4,6 +4,7 @@ import "./globals.css";
 // const inter = Inter({ subsets: ["latin"] });
 import { Layout } from "@/components";
 import { ContextWrapper } from "@/context";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "Shopz",
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <ContextWrapper>
+          <Toaster position="top-center" />
           {children}
         </ContextWrapper>
       </body>

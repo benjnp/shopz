@@ -4,14 +4,27 @@ import React, { useEffect } from 'react'
 import Link from 'next/link'
 import { AiOutlineShopping } from 'react-icons/ai'
 import { useStateContext } from "@/context";
+import { Cart } from '.';
+import { TemplateContext } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 const Navbar = () => {
-  const { totalQuantities, setTotalQuantities } = useStateContext()
+  const { totalQuantities, setTotalQuantities, showCart, setShowCart, setCartItems, setTotalPrice } = useStateContext()
   useEffect(() => {
     if (typeof window !== 'undefined') {
       // Perform localStorage action
-      const qty = localStorage.getItem('qty') 
-      setTotalQuantities(parseInt(qty))
+      let qty = localStorage.getItem('qty') 
+      if(qty == null)
+        qty = 0
+      else
+        setTotalQuantities(parseInt(qty))
+      let tempCart = JSON.parse(localStorage.getItem('cart'));
+      if(tempCart !== null) {
+        setCartItems(tempCart)
+      }
+      let tempPrice = localStorage.getItem('totalPrice') 
+      if(tempPrice !== null)
+        setTotalPrice(tempPrice)
+      
     }
   }, [])
   
@@ -24,10 +37,12 @@ const Navbar = () => {
       <button
         type="button"
         className="cart-icon"
+        onClick={() => setShowCart(true)}
       >
         <AiOutlineShopping />
         <span className="cart-item-qty">{totalQuantities}</span>
       </button>
+      {showCart && <Cart />}
     </div>
   )
 }

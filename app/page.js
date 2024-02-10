@@ -1,3 +1,4 @@
+
 import { Footer, HeroBanner, FooterBanner, Product, Navbar, Products } from '../components'
 import React from 'react'
 import './globals.css';
@@ -14,11 +15,13 @@ const Home = async () => {
   // const cont = useStateContext()
   // console.log("Hi", cont)
   const { banner } = await getData()
+
   return (
     <div className="main-container">
       <Navbar />
 
       <HeroBanner heroBanner={banner.length && banner[0]}/>
+      
       <Products />
       <FooterBanner footerBanner={banner.length && banner[1]} />
       <Footer />

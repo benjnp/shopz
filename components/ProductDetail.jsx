@@ -12,7 +12,6 @@ const ProductDetail = ({product}) => {
 
     const incQty = () => {
         setQty((prevQty) => prevQty + 1);
-        console.log("New Qty: ", qty)
       }
     
       const decQty = () => {

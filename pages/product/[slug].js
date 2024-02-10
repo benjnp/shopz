@@ -47,10 +47,6 @@ export async function getStaticProps({params: {slug}}) {
 
 
 const ProductDetails = ({product, allProducts}) => {
-
-    useEffect(() => {
-      console.log("Loaded")
-    }, [])
     
     const [ qty, setQty ] = useState(1)
 

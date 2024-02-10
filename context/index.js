@@ -16,9 +16,12 @@ export const ContextWrapper = ({ children }) => {
   let index;
 
   const onAdd = (product, quantity) => {
-    const checkProductInCart = cartItems.find((item) => item._id === product._id);
+    const checkProductInCart = cartItems?.find((item) => item._id === product._id);
     
-    setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity);
+    setTotalPrice((prevTotalPrice) => {
+      localStorage.setItem("totalPrice", prevTotalPrice + product.price * quantity)
+      return prevTotalPrice + product.price * quantity
+    });
     setTotalQuantities((prevTotalQuantities) => {
       localStorage.setItem('qty', prevTotalQuantities + quantity)
       return prevTotalQuantities + quantity;
@@ -30,16 +33,27 @@ export const ContextWrapper = ({ children }) => {
           ...cartProduct,
           quantity: cartProduct.quantity + quantity
         }
+        else 
+          return {...cartProduct}
       })
-      setCartItems(updatedCartItems);
+      
+      setCartItems(() => {
+        localStorage.setItem("cart", JSON.stringify(updatedCartItems))
+        return updatedCartItems
+      }
+      );
 
     } else {
       product.quantity = quantity;
       
-      setCartItems([...cartItems, { ...product }]);
+      setCartItems(() => {
+        localStorage.setItem("cart", JSON.stringify([...cartItems, { ...product }]))
+        return [...cartItems, { ...product }]
+      }
+      );
     }
     
-    toast.success(`${qty} ${product.name} added to the cart.`);
+    toast.success(`${quantity} ${product.name} added to the cart.`);
     
   } 
 

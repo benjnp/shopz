@@ -4,6 +4,7 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 import "../app/globals.css"
 import { ContextWrapper } from '@/context'
+import { Toaster } from "react-hot-toast";
 
 const Layout = ({children}) => {
   return (
@@ -17,6 +18,7 @@ const Layout = ({children}) => {
         <Navbar />
       </header>
         <main className="main-container">
+        <Toaster position="top-center" />
           {children}
         </main>
         </ContextWrapper>
