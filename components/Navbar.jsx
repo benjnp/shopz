@@ -1,8 +1,12 @@
+'use client'
+
 import React from 'react'
 import Link from 'next/link'
 import { AiOutlineShopping } from 'react-icons/ai'
+import { useStateContext } from "@/context";
 
 const Navbar = () => {
+
   return (
     <div className="navbar-container">
       <p className="logo">

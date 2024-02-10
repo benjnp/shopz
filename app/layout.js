@@ -3,6 +3,7 @@ import "./globals.css";
 
 // const inter = Inter({ subsets: ["latin"] });
 import { Layout } from "@/components";
+import { ContextWrapper } from "@/context";
 
 export const metadata = {
   title: "Shopz",
@@ -12,7 +13,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ContextWrapper>
+          {children}
+        </ContextWrapper>
+      </body>
     </html>
     // <Layout>
     //   <body>{children}</body>

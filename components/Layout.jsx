@@ -3,9 +3,11 @@ import Head from 'next/head'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import "../app/globals.css"
+import { ContextWrapper } from '@/context'
 
 const Layout = ({children}) => {
   return (
+    <ContextWrapper>
     <div className="layout">
       <Head>
         <title>Shopz by Next JS</title>
@@ -13,9 +15,12 @@ const Layout = ({children}) => {
       <header>
         <Navbar />
       </header>
-        <main className="main-container">{children}</main>
+        <main className="main-container">
+          {children}
+        </main>
       <footer><Footer /></footer>
     </div>
+    </ContextWrapper>
   )
 }
 

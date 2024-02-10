@@ -11,10 +11,13 @@ async function getData() {
 }
 
 const Home = async () => {
+  // const cont = useStateContext()
+  // console.log("Hi", cont)
   const { banner } = await getData()
   return (
     <div className="main-container">
       <Navbar />
+
       <HeroBanner heroBanner={banner.length && banner[0]}/>
       <Products />
       <FooterBanner footerBanner={banner.length && banner[1]} />
