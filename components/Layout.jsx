@@ -7,20 +7,22 @@ import { ContextWrapper } from '@/context'
 
 const Layout = ({children}) => {
   return (
-    <ContextWrapper>
+    
     <div className="layout">
       <Head>
         <title>Shopz by Next JS</title>
       </Head>
+      <ContextWrapper>
       <header>
         <Navbar />
       </header>
         <main className="main-container">
           {children}
         </main>
+        </ContextWrapper>
       <footer><Footer /></footer>
     </div>
-    </ContextWrapper>
+    
   )
 }
 

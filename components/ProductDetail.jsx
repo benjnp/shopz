@@ -1,12 +1,35 @@
+'use client'
+
 import { useStateContext } from '@/context'
-import React from 'react'
+import React, { useState } from 'react'
 import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-icons/ai'
+import { save } from '@/lib/storage'
 
 const ProductDetail = ({product}) => {
     const { image, name, details, price } = product
-    const { qty, incQty, decQty,} = useStateContext()
-    // const cont = useStateContext()
-    // console.log("Product Detail: ", qty)
+    const { onAdd} = useStateContext()
+    const [ qty, setQty ] = useState(1)
+
+    const incQty = () => {
+        setQty((prevQty) => prevQty + 1);
+        console.log("New Qty: ", qty)
+      }
+    
+      const decQty = () => {
+        setQty((prevQty) => {
+          if(prevQty - 1 < 1) return 1;
+         
+          return prevQty - 1;
+        });
+      }
+    // if (typeof window !== 'undefined') {
+    //     // Perform localStorage action
+    //     const quant = localStorage.getItem("qty")
+    //     console.log(quant)
+    //   }
+    
+  
+    
   return (
     <div>
         <div className="product-detail-desc">
@@ -36,7 +59,7 @@ const ProductDetail = ({product}) => {
                 <button
                     type="button"
                     className="add-to-cart"
-                    onClick=""
+                    onClick={() => onAdd(product, qty)}
                 >
                     Add to Cart
                 </button>
