@@ -61,9 +61,19 @@ export const ContextWrapper = ({ children }) => {
     foundProduct = cartItems.find((item) => item._id === product._id);
     const newCartItems = cartItems.filter((item) => item._id !== product._id);
 
-    setTotalPrice((prevTotalPrice) => prevTotalPrice -foundProduct.price * foundProduct.quantity);
-    setTotalQuantities(prevTotalQuantities => prevTotalQuantities - foundProduct.quantity);
-    setCartItems(newCartItems);
+    setTotalPrice((prevTotalPrice) => {
+      localStorage.setItem("totalPrice", prevTotalPrice - foundProduct.price * foundProduct.quantity)
+      return prevTotalPrice - foundProduct.price * foundProduct.quantity
+    });
+    setTotalQuantities(prevTotalQuantities => {
+      localStorage.setItem('qty', prevTotalQuantities - foundProduct.quantity)
+      return prevTotalQuantities - foundProduct.quantity
+    });
+    setCartItems(() => {
+      localStorage.setItem("cart", newCartItems)
+      return (newCartItems)
+    })
+
   }
 
   const toggleCartItemQuanitity = (id, value) => {
@@ -72,14 +82,36 @@ export const ContextWrapper = ({ children }) => {
     const newCartItems = cartItems.filter((item) => item._id !== id)
 
     if(value === 'inc') {
-      setCartItems([...newCartItems, { ...foundProduct, quantity: foundProduct.quantity + 1 } ]);
-      setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price)
-      setTotalQuantities(prevTotalQuantities => prevTotalQuantities + 1)
+      setCartItems(() => {
+        localStorage.setItem("cart", JSON.stringify(
+          [...newCartItems, { ...foundProduct, quantity: foundProduct.quantity + 1 } ]
+        ))
+        return [...newCartItems, { ...foundProduct, quantity: foundProduct.quantity + 1 } ]      
+      });
+      setTotalPrice((prevTotalPrice) => {
+        localStorage.setItem("totalPrice", prevTotalPrice + foundProduct.price)
+        return prevTotalPrice + foundProduct.price
+      })
+      setTotalQuantities(prevTotalQuantities => {
+        localStorage.setItem('qty', prevTotalQuantities + 1)
+        return prevTotalQuantities + 1
+      })
     } else if(value === 'dec') {
       if (foundProduct.quantity > 1) {
-        setCartItems([...newCartItems, { ...foundProduct, quantity: foundProduct.quantity - 1 } ]);
-        setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price)
-        setTotalQuantities(prevTotalQuantities => prevTotalQuantities - 1)
+        setCartItems(() => {
+          localStorage.setItem("cart", JSON.stringify(
+            [...newCartItems, { ...foundProduct, quantity: foundProduct.quantity - 1 } ]
+          ))
+          return [...newCartItems, { ...foundProduct, quantity: foundProduct.quantity - 1 } ]
+        });
+        setTotalPrice((prevTotalPrice) => {
+          localStorage.setItem("totalPrice", prevTotalPrice - foundProduct.price)
+          return prevTotalPrice - foundProduct.price
+        })
+        setTotalQuantities(prevTotalQuantities => {
+          localStorage.setItem('qty', prevTotalQuantities - 1)
+          return prevTotalQuantities - 1
+        })
       }
     }
   }

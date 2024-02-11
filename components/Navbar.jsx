@@ -22,8 +22,9 @@ const Navbar = () => {
         setCartItems(tempCart)
       }
       let tempPrice = localStorage.getItem('totalPrice') 
-      if(tempPrice !== null)
-        setTotalPrice(tempPrice)
+      if(tempPrice !== null) 
+        setTotalPrice(parseInt(tempPrice))
+      
       
     }
   }, [])
