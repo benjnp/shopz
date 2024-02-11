@@ -80,14 +80,27 @@ export const ContextWrapper = ({ children }) => {
     foundProduct = cartItems.find((item) => item._id === id)
     index = cartItems.findIndex((product) => product._id === id);
     const newCartItems = cartItems.filter((item) => item._id !== id)
+    
 
     if(value === 'inc') {
+      let tempCart = []
+      cartItems.map((item) => {
+        if(id != item._id)
+          tempCart.push(item)
+        else {
+          tempCart.push({ ...foundProduct, quantity: foundProduct.quantity + 1 })
+        }
+      })
       setCartItems(() => {
-        localStorage.setItem("cart", JSON.stringify(
-          [...newCartItems, { ...foundProduct, quantity: foundProduct.quantity + 1 } ]
-        ))
-        return [...newCartItems, { ...foundProduct, quantity: foundProduct.quantity + 1 } ]      
-      });
+          localStorage.setItem("cart", JSON.stringify(tempCart))
+          return tempCart      
+        });
+      // setCartItems(() => {
+      //   localStorage.setItem("cart", JSON.stringify(
+      //     [...newCartItems, { ...foundProduct, quantity: foundProduct.quantity + 1 } ]
+      //   ))
+      //   return [...newCartItems, { ...foundProduct, quantity: foundProduct.quantity + 1 } ]      
+      // });
       setTotalPrice((prevTotalPrice) => {
         localStorage.setItem("totalPrice", prevTotalPrice + foundProduct.price)
         return prevTotalPrice + foundProduct.price
@@ -98,12 +111,24 @@ export const ContextWrapper = ({ children }) => {
       })
     } else if(value === 'dec') {
       if (foundProduct.quantity > 1) {
+        let tempCart = []
+        cartItems.map((item) => {
+          if(id != item._id)
+            tempCart.push(item)
+          else {
+            tempCart.push({ ...foundProduct, quantity: foundProduct.quantity - 1 })
+          }
+        })
         setCartItems(() => {
-          localStorage.setItem("cart", JSON.stringify(
-            [...newCartItems, { ...foundProduct, quantity: foundProduct.quantity - 1 } ]
-          ))
-          return [...newCartItems, { ...foundProduct, quantity: foundProduct.quantity - 1 } ]
+          localStorage.setItem("cart", JSON.stringify(tempCart))
+          return tempCart      
         });
+        // setCartItems(() => {
+        //   localStorage.setItem("cart", JSON.stringify(
+        //     [...newCartItems, { ...foundProduct, quantity: foundProduct.quantity - 1 } ]
+        //   ))
+        //   return [...newCartItems, { ...foundProduct, quantity: foundProduct.quantity - 1 } ]
+        // });
         setTotalPrice((prevTotalPrice) => {
           localStorage.setItem("totalPrice", prevTotalPrice - foundProduct.price)
           return prevTotalPrice - foundProduct.price
