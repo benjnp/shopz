@@ -17,10 +17,17 @@ const Navbar = () => {
         qty = 0
       else
         setTotalQuantities(parseInt(qty))
-      let tempCart = JSON.parse(localStorage.getItem('cart'));
-      if(tempCart !== null) {
+      let tempCartStorage = localStorage.getItem('cart')
+      let tempCart
+      if( tempCartStorage != null && tempCartStorage != '') {
+        tempCart = JSON.parse(localStorage.getItem('cart'));
         setCartItems(tempCart)
       }
+      else
+        tempCart = []
+      // if(tempCart !== null) {
+      //   setCartItems(tempCart)
+      // }
       let tempPrice = localStorage.getItem('totalPrice') 
       if(tempPrice !== null) 
         setTotalPrice(parseInt(tempPrice))

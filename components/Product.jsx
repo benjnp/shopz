@@ -3,7 +3,6 @@
 import React, { useEffect } from 'react'
 import Link from 'next/link'
 import { urlFor } from '@/lib/client'
-import { resetQty } from '@/lib/storage'
 import { useStateContext } from '@/context'
 
 const Product = ({product: {image, name, slug, price}, resetQty}) => {
