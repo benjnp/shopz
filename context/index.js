@@ -45,16 +45,13 @@ export const ContextWrapper = ({ children }) => {
 
     } else {
       product.quantity = quantity;
-      
       setCartItems(() => {
         localStorage.setItem("cart", JSON.stringify([...cartItems, { ...product }]))
         return [...cartItems, { ...product }]
       }
       );
-    }
-    
+    }   
     toast.success(`${quantity} ${product.name} added to the cart.`);
-    
   } 
 
   const onRemove = (product) => {
